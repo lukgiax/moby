@@ -7,9 +7,9 @@ copy_binaries() {
 	# Add nested executables to bundle dir so we have complete set of
 	# them available, but only if the native OS/ARCH is the same as the
 	# OS/ARCH of the build target
-	if [ "$(go env GOOS)/$(go env GOARCH)" != "$(go env GOHOSTOS)/$(go env GOHOSTARCH)" ]; then
-		return
-	fi
+	# if [ "$(go env GOOS)/$(go env GOARCH)" != "$(go env GOHOSTOS)/$(go env GOHOSTARCH)" ]; then
+	# 	return
+	# fi
 	if [ ! -x /usr/local/bin/runc ]; then
 		return
 	fi
