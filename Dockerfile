@@ -8,7 +8,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG VPNKIT_VERSION=0.5.0
 ARG DOCKER_BUILDTAGS="apparmor seccomp"
 
-ARG BASE_DEBIAN_DISTRO="buster"
+ARG BASE_DEBIAN_DISTRO="stretch"
 ARG GOLANG_IMAGE="golang:${GO_VERSION}-${BASE_DEBIAN_DISTRO}"
 
 FROM ${GOLANG_IMAGE} AS base
@@ -93,7 +93,7 @@ RUN --mount=type=cache,sharing=locked,id=moby-frozen-images-aptlib,target=/var/l
 COPY contrib/download-frozen-image-v2.sh /
 ARG TARGETARCH
 RUN /download-frozen-image-v2.sh /build \
-        buildpack-deps:buster@sha256:d0abb4b1e5c664828b93e8b6ac84d10bce45ee469999bef88304be04a2709491 \
+        buildpack-deps:stretch@sha256:d0abb4b1e5c664828b93e8b6ac84d10bce45ee469999bef88304be04a2709491 \
         busybox:latest@sha256:95cf004f559831017cdf4628aaf1bb30133677be8702a8c5f2994629f637a209 \
         busybox:glibc@sha256:1f81263701cddf6402afe9f33fca0266d9fff379e59b1748f33d3072da71ee85 \
         debian:bullseye@sha256:7190e972ab16aefea4d758ebe42a293f4e5c5be63595f4d03a5b9bf6839a4344 \
@@ -126,7 +126,7 @@ RUN --mount=type=cache,sharing=locked,id=moby-cross-false-aptlib,target=/var/lib
             binutils-mingw-w64 \
             g++-mingw-w64-x86-64 \
             libapparmor-dev \
-            libbtrfs-dev \
+            btrfs-progs \
             libdevmapper-dev \
             libseccomp-dev/buster-backports \
             libsystemd-dev \
@@ -170,7 +170,7 @@ ARG DEBIAN_FRONTEND
 RUN --mount=type=cache,sharing=locked,id=moby-containerd-aptlib,target=/var/lib/apt \
     --mount=type=cache,sharing=locked,id=moby-containerd-aptcache,target=/var/cache/apt \
         apt-get update && apt-get install -y --no-install-recommends \
-            libbtrfs-dev
+            btrfs-progs
 ARG CONTAINERD_COMMIT
 RUN --mount=type=cache,target=/root/.cache/go-build \
     --mount=type=cache,target=/go/pkg/mod \
